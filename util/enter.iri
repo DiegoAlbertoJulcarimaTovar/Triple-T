@@ -20,9 +20,9 @@ end;
 procedure StoreSelectedSymbol(playerNumber: integer);
 begin
     if (playerNumber = 1) then
-        g_arrPlayer1Symbols[g_SelectedSymbol] := g_SelectedSymbol;
+        g_arrPlayer1Symbols[g_SelectedSymbol] := TRUE;
     elsif (playerNumber = 2) then
-        g_arrPlayer2Symbols[g_SelectedSymbol] := g_SelectedSymbol;
+        g_arrPlayer2Symbols[g_SelectedSymbol] := TRUE;
     end if;
 end;
 
@@ -81,30 +81,53 @@ begin
     return TRUE;
 end;
 
-function IsWinnerPlay(arrSymbols: arrIntegers): integer;
+function NewArray: arrIntegers;
+    arr: arrIntegers;
+begin
+    for i := 1 to 9
+    loop
+        arr[i] := 0;
+    end loop;
+
+    return arr;
+end;
+
+function IsWinnerPlayHelper(arrSymbols: arrIntegers; n1: integer; n2: integer; n3: integer): integer;
     winnerArray: arrIntegers;
     strippedArray: arrIntegers;
     i: integer;
 begin
-    for i := 1 to 9
-    loop
-        strippedArray[i] := 0;
-    end loop;
+    strippedArray := NewArray;
+    winnerArray := NewArray;
 
-    strippedArray[1] := arrSymbols[1];
-    strippedArray[2] := arrSymbols[2];
-    strippedArray[3] := arrSymbols[3];
+    strippedArray[n1] := arrSymbols[n1];
+    strippedArray[n2] := arrSymbols[n2];
+    strippedArray[n3] := arrSymbols[n3];
 
-    for i := 1 to 9
-    loop
-        winnerArray[i] := 0;
-    end loop;
+    winnerArray[n1] := TRUE;
+    winnerArray[n2] := TRUE;
+    winnerArray[n3] := TRUE;
 
-    winnerArray[1] := 1;
-    winnerArray[2] := 2;
-    winnerArray[3] := 3;
+    return ArrayMatch(strippedArray, winnerArray);
+end;
 
-    if (ArrayMatch(strippedArray, winnerArray) = TRUE) then
+function IsWinnerPlay(arrSymbols: arrIntegers): integer;
+begin
+    if (IsWinnerPlayHelper(arrSymbols, 1, 2, 3) = TRUE) then  
+        return TRUE;
+    elsif (IsWinnerPlayHelper(arrSymbols, 4, 5, 6) = TRUE) then  
+        return TRUE;
+    elsif (IsWinnerPlayHelper(arrSymbols, 7, 8, 9) = TRUE) then  
+        return TRUE;
+    elsif (IsWinnerPlayHelper(arrSymbols, 1, 4, 7) = TRUE) then  
+        return TRUE;
+    elsif (IsWinnerPlayHelper(arrSymbols, 2, 5, 8) = TRUE) then  
+        return TRUE;
+    elsif (IsWinnerPlayHelper(arrSymbols, 3, 6, 9) = TRUE) then  
+        return TRUE;
+    elsif (IsWinnerPlayHelper(arrSymbols, 1, 5, 9) = TRUE) then  
+        return TRUE;
+    elsif (IsWinnerPlayHelper(arrSymbols, 3, 5, 7) = TRUE) then  
         return TRUE;
     end if;
 

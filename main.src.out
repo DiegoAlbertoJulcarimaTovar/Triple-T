@@ -1,7 +1,7 @@
---$START  c:\Proyectos\920\Triple-T\main.src
+--$START  c:\Users\User\Desktop\Triple-T\main.src
 program TicTacToe;
 
---$START  c:\Proyectos\920\Triple-T\config.iri 
+--$START  c:\Users\User\Desktop\Triple-T\config.iri 
  -------------------------------------------------
 -- Used with iRev Configuration File
 -- C:\Users\User\Desktop\Triple-T\main.920
@@ -100,7 +100,7 @@ Truck_Keyed       : constant integer := 7;
 
 
  
- --$END  c:\Proyectos\920\Triple-T\config.iri
+ --$END  c:\Users\User\Desktop\Triple-T\config.iri
 
 TRUE: constant integer := 1;
 FALSE: constant integer := 0;
@@ -135,7 +135,7 @@ type arrIntegers is array[9] of integer;
 g_arrPlayer1Symbols: arrIntegers;
 g_arrPlayer2Symbols: arrIntegers;
 
---$START  c:\Proyectos\920\Triple-T\util\arrow.iri 
+--$START  c:\Users\User\Desktop\Triple-T\util\arrow.iri 
  function SetArrowPosition(
     arrowPosition: integer; 
     incrementValue: integer; 
@@ -180,8 +180,8 @@ begin
         SetSymbolState(startingId + (i - 1), state);
     end loop;
 end; 
- --$END  c:\Proyectos\920\Triple-T\util\arrow.iri
---$START  c:\Proyectos\920\Triple-T\util\enter.iri 
+ --$END  c:\Users\User\Desktop\Triple-T\util\arrow.iri
+--$START  c:\Users\User\Desktop\Triple-T\util\enter.iri 
  function GetSelectedSymbol: integer;
 begin
     return g_TopArrowPosition + g_LeftArrowPosition + 1;
@@ -204,9 +204,9 @@ end;
 procedure StoreSelectedSymbol(playerNumber: integer);
 begin
     if (playerNumber = 1) then
-        g_arrPlayer1Symbols[g_SelectedSymbol] := g_SelectedSymbol;
+        g_arrPlayer1Symbols[g_SelectedSymbol] := TRUE;
     elsif (playerNumber = 2) then
-        g_arrPlayer2Symbols[g_SelectedSymbol] := g_SelectedSymbol;
+        g_arrPlayer2Symbols[g_SelectedSymbol] := TRUE;
     end if;
 end;
 
@@ -334,9 +334,9 @@ begin
     SetRoundWinner(winnerPlayer);
     DisableHandler(EnterKeyPressed);
 end; 
- --$END  c:\Proyectos\920\Triple-T\util\enter.iri
+ --$END  c:\Users\User\Desktop\Triple-T\util\enter.iri
 
---$START  c:\Proyectos\920\Triple-T\handlers\key_pressed\nav_down.iri 
+--$START  c:\Users\User\Desktop\Triple-T\handlers\key_pressed\nav_down.iri 
  handler NavDownKeyPressed;
 begin
     g_LeftArrowPosition := SetArrowPosition(g_LeftArrowPosition,
@@ -344,8 +344,8 @@ begin
         MAX_LEFT_ARROW_POSITION);
     DrawArrow(g_LeftArrowPosition, STARTING_LEFT_ARRROW_ID, LEFT_ARROW_INCREMENT);
 end; 
- --$END  c:\Proyectos\920\Triple-T\handlers\key_pressed\nav_down.iri
---$START  c:\Proyectos\920\Triple-T\handlers\key_pressed\nav_up.iri 
+ --$END  c:\Users\User\Desktop\Triple-T\handlers\key_pressed\nav_down.iri
+--$START  c:\Users\User\Desktop\Triple-T\handlers\key_pressed\nav_up.iri 
  handler NavUpKeyPressed;
 begin
     g_LeftArrowPosition := SetArrowPosition(g_LeftArrowPosition,
@@ -353,8 +353,8 @@ begin
         MAX_LEFT_ARROW_POSITION);
     DrawArrow(g_LeftArrowPosition, STARTING_LEFT_ARRROW_ID, LEFT_ARROW_INCREMENT);
 end; 
- --$END  c:\Proyectos\920\Triple-T\handlers\key_pressed\nav_up.iri
---$START  c:\Proyectos\920\Triple-T\handlers\key_pressed\nav_left.iri 
+ --$END  c:\Users\User\Desktop\Triple-T\handlers\key_pressed\nav_up.iri
+--$START  c:\Users\User\Desktop\Triple-T\handlers\key_pressed\nav_left.iri 
  handler NavLeftKeyPressed;
 begin
     g_TopArrowPosition := SetArrowPosition(g_TopArrowPosition, 
@@ -362,8 +362,8 @@ begin
         MAX_TOP_ARROW_POSITION);
     DrawArrow(g_TopArrowPosition, STARTING_TOP_ARRROW_ID, TOP_ARROW_INCREMENT);
 end; 
- --$END  c:\Proyectos\920\Triple-T\handlers\key_pressed\nav_left.iri
---$START  c:\Proyectos\920\Triple-T\handlers\key_pressed\nav_right.iri 
+ --$END  c:\Users\User\Desktop\Triple-T\handlers\key_pressed\nav_left.iri
+--$START  c:\Users\User\Desktop\Triple-T\handlers\key_pressed\nav_right.iri 
  handler NavRightKeyPressed;
 begin
     g_TopArrowPosition := SetArrowPosition(g_TopArrowPosition, 
@@ -371,8 +371,8 @@ begin
         MAX_TOP_ARROW_POSITION);
     DrawArrow(g_TopArrowPosition, STARTING_TOP_ARRROW_ID, TOP_ARROW_INCREMENT);
 end; 
- --$END  c:\Proyectos\920\Triple-T\handlers\key_pressed\nav_right.iri
---$START  c:\Proyectos\920\Triple-T\handlers\key_pressed\enter.iri 
+ --$END  c:\Users\User\Desktop\Triple-T\handlers\key_pressed\nav_right.iri
+--$START  c:\Users\User\Desktop\Triple-T\handlers\key_pressed\enter.iri 
  handler EnterKeyPressed;
 begin
     g_SelectedSymbol := GetSelectedSymbol;
@@ -386,7 +386,7 @@ begin
     CheckForWin;
 end;
  
- --$END  c:\Proyectos\920\Triple-T\handlers\key_pressed\enter.iri
+ --$END  c:\Users\User\Desktop\Triple-T\handlers\key_pressed\enter.iri
 
 procedure DrawSymbols(startingId: integer; state: integer; totalWidgets: integer);
     i: integer;
@@ -410,4 +410,4 @@ begin
     SetSymbolState(STARTING_LEFT_ARRROW_ID, DEFAULT_STATE);
     SetSymbolState(STARTING_TOP_ARRROW_ID, DEFAULT_STATE);
 end TicTacToe;
---$END  c:\Proyectos\920\Triple-T\main.src
+--$END  c:\Users\User\Desktop\Triple-T\main.src
