@@ -83,6 +83,7 @@ end;
 
 function NewArray: arrIntegers;
     arr: arrIntegers;
+    i: integer;
 begin
     for i := 1 to 9
     loop
