@@ -5,6 +5,9 @@ program TicTacToe;
 TRUE: constant integer := 1;
 FALSE: constant integer := 0;
 
+g_Player1Score: integer := 0;
+g_Player2Score: integer := 0;
+
 g_TopArrowPosition: integer := 0;
 g_LeftArrowPosition: integer := 0;
 
@@ -36,6 +39,8 @@ g_arrPlayer2Symbols: arrIntegers;
 #include util\enter.iri
 
 #include handlers\key_pressed\nav_down.iri
+#include handlers\key_pressed\nav_up.iri
+#include handlers\key_pressed\nav_left.iri
 #include handlers\key_pressed\nav_right.iri
 #include handlers\key_pressed\enter.iri
 

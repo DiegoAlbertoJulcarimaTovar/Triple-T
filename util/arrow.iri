@@ -2,12 +2,20 @@ function SetArrowPosition(
     arrowPosition: integer; 
     incrementValue: integer; 
     maxValue: integer): integer;
-begin
-    if (arrowPosition = maxValue) then
+    newPosition: integer;
+begin   
+    if (arrowPosition = maxValue 
+        and incrementValue > 0) then
         return 0;
     end if;
+    
+    newPosition := arrowPosition + incrementValue;
 
-    return arrowPosition + incrementValue;
+    if (newPosition < 0) then
+        return maxValue;
+    end if;
+
+    return newPosition;
 end;
 
 procedure DrawArrow(arrrowPosition: integer; startingId: integer; incrementValue: integer);

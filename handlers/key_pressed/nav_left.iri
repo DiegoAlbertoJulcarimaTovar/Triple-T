@@ -1,7 +1,7 @@
-handler NavRightKeyPressed;
+handler NavLeftKeyPressed;
 begin
     g_TopArrowPosition := SetArrowPosition(g_TopArrowPosition, 
-        TOP_ARROW_INCREMENT, 
+        (TOP_ARROW_INCREMENT * -1), 
         MAX_TOP_ARROW_POSITION);
     DrawArrow(g_TopArrowPosition, STARTING_TOP_ARRROW_ID, TOP_ARROW_INCREMENT);
 end;

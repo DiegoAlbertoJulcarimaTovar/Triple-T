@@ -1,6 +1,6 @@
-@REVISION=5.12.0
+@REVISION=5.11.1
 @CRC=-834596574
-@CODFile=C:\Users\User\Desktop\Triple-T\main.cod
+@CODFile=C:\Proyectos\920\Triple-T\main.cod
 
 [BEGIN]
 BATCHNG=OFF
