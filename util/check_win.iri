@@ -1,0 +1,43 @@
+----------------------------------------------------------------------------
+function IsWinnerPlayHelper(arrSymbols: arrIntegers; n1: integer; n2: integer; n3: integer): integer;
+    winnerArray: arrIntegers;
+    strippedArray: arrIntegers;
+    i: integer;
+begin
+    strippedArray := NewArray;
+    winnerArray := NewArray;
+
+    strippedArray[n1] := arrSymbols[n1];
+    strippedArray[n2] := arrSymbols[n2];
+    strippedArray[n3] := arrSymbols[n3];
+
+    winnerArray[n1] := TRUE;
+    winnerArray[n2] := TRUE;
+    winnerArray[n3] := TRUE;
+
+    return ArrayMatch(strippedArray, winnerArray);
+end;
+----------------------------------------------------------------------------
+function IsWinnerPlay(arrSymbols: arrIntegers): integer;
+begin
+    if (IsWinnerPlayHelper(arrSymbols, 1, 2, 3) = TRUE) then  
+        return TRUE;
+    elsif (IsWinnerPlayHelper(arrSymbols, 4, 5, 6) = TRUE) then  
+        return TRUE;
+    elsif (IsWinnerPlayHelper(arrSymbols, 7, 8, 9) = TRUE) then  
+        return TRUE;
+    elsif (IsWinnerPlayHelper(arrSymbols, 1, 4, 7) = TRUE) then  
+        return TRUE;
+    elsif (IsWinnerPlayHelper(arrSymbols, 2, 5, 8) = TRUE) then  
+        return TRUE;
+    elsif (IsWinnerPlayHelper(arrSymbols, 3, 6, 9) = TRUE) then  
+        return TRUE;
+    elsif (IsWinnerPlayHelper(arrSymbols, 1, 5, 9) = TRUE) then  
+        return TRUE;
+    elsif (IsWinnerPlayHelper(arrSymbols, 3, 5, 7) = TRUE) then  
+        return TRUE;
+    end if;
+
+    return FALSE;
+end;
+----------------------------------------------------------------------------

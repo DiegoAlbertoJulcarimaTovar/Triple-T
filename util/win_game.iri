@@ -1,0 +1,55 @@
+----------------------------------------------------------------------------
+procedure DrawWinnerPlay(playerNumber: integer);
+    i: integer;
+    symbolId: integer;
+    winnerArray: arrIntegers;
+begin
+    if (playerNumber = 1) then
+        symbolId := STARTING_CIRCLE_ID;
+        winnerArray := g_arrPlayer1Symbols;
+    elsif (playerNumber = 2) then
+        symbolId := STARTING_SQUARE_ID;
+        winnerArray := g_arrPlayer2Symbols;
+    end if;
+
+    for i := 1 to 9
+    loop
+        if (winnerArray[i] <> 0) then
+            SetSymbolState(symbolId + i - 1, FILL_STATE);
+        end if;
+    end loop;
+end;
+----------------------------------------------------------------------------
+procedure SetRoundWinner(playerNumber: integer);
+begin
+    if (playerNumber = 1) then
+        g_Player1Score := g_Player1Score + 1;
+        DisplayStatus("Player 1 Won!");
+    elsif (playerNumber = 2) then
+        g_Player2Score := g_Player2Score + 1;
+        DisplayStatus("Player 2 Won!");
+    end if;
+    SetLabelText(Lbl3S1, IntegerToString(g_Player1Score, 0));
+    SetLabelText(Lbl4S1, IntegerToString(g_Player2Score, 0));
+end;
+----------------------------------------------------------------------------
+procedure CheckForWin;
+    winnerPlayer: integer;
+begin
+    winnerPlayer := 0;
+    if (IsWinnerPlay(g_arrPlayer1Symbols) = TRUE) then
+        winnerPlayer := 1;
+    elsif (IsWinnerPlay(g_arrPlayer2Symbols) = TRUE) then
+        winnerPlayer := 2;
+    end if;
+
+    if (winnerPlayer = 0) then
+        return;
+    end if;
+
+    DrawWinnerPlay(winnerPlayer);
+    SetRoundWinner(winnerPlayer);
+    ProgramDelay(150);
+    RestartGame;
+end;
+----------------------------------------------------------------------------

@@ -1,3 +1,4 @@
+----------------------------------------------------------------------------
 function SetArrowPosition(
     arrowPosition: integer; 
     incrementValue: integer; 
@@ -17,7 +18,7 @@ begin
 
     return newPosition;
 end;
-
+----------------------------------------------------------------------------
 procedure DrawArrow(arrrowPosition: integer; startingId: integer; incrementValue: integer);
     i: integer;
     arrowState: integer;
@@ -42,3 +43,12 @@ begin
         SetSymbolState(startingId + (i - 1), state);
     end loop;
 end;
+----------------------------------------------------------------------------
+procedure RestartArrowsPosition;
+begin
+    g_TopArrowPosition := 0;
+    g_LeftArrowPosition := 0;
+    DrawArrow(g_TopArrowPosition, STARTING_TOP_ARRROW_ID, TOP_ARROW_INCREMENT);
+    DrawArrow(g_LeftArrowPosition, STARTING_LEFT_ARRROW_ID, LEFT_ARROW_INCREMENT);
+end;
+----------------------------------------------------------------------------

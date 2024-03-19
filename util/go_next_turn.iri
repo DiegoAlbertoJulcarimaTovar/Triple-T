@@ -1,0 +1,13 @@
+----------------------------------------------------------------------------
+procedure GoToNextTurn;
+begin
+    if (g_CurrentPlayer = 1) then
+        g_CurrentPlayer := 2;
+        DisplayStatus("Player 2 Turn!");
+    elsif (g_CurrentPlayer = 2) then
+        g_CurrentPlayer := 1;
+        DisplayStatus("Player 1 Turn!");
+    end if;
+    RestartArrowsPosition;
+end;
+----------------------------------------------------------------------------

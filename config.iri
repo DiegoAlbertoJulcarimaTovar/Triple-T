@@ -38,6 +38,10 @@ Sym21S1  : constant integer := 26;
 Sym22S1  : constant integer := 27;
 Sym23S1  : constant integer := 28;
 Sym24S1  : constant integer := 29;
+Lbl1S1   : constant integer := 30;
+Lbl2S1   : constant integer := 31;
+Lbl3S1   : constant integer := 32;
+Lbl4S1   : constant integer := 33;
 
 -- Serial Port Aliases
 Port1    : constant integer := 1;

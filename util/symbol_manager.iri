@@ -1,0 +1,41 @@
+----------------------------------------------------------------------------
+function GetSelectedSymbol: integer;
+begin
+    return g_TopArrowPosition + g_LeftArrowPosition + 1;
+end;
+----------------------------------------------------------------------------
+function IsSymbolPlayable(symbolId: integer): integer;
+    i: integer;
+begin
+    for i := 1 to 9
+    loop
+        if (g_arrPlayer1Symbols[i] = symbolId
+            or g_arrPlayer2Symbols[i] = symbolId) then
+            return FALSE;
+        end if;
+    end loop;
+
+    return TRUE;
+end;
+----------------------------------------------------------------------------
+procedure StoreSelectedSymbol(playerNumber: integer);
+begin
+    if (playerNumber = 1) then
+        g_arrPlayer1Symbols[g_SelectedSymbol] := TRUE;
+    elsif (playerNumber = 2) then
+        g_arrPlayer2Symbols[g_SelectedSymbol] := TRUE;
+    end if;
+end;
+----------------------------------------------------------------------------
+procedure DrawSelectedSymbol(playerNumber: integer);
+    symbolId: integer;
+begin
+    if (playerNumber = 1) then
+        symbolId := STARTING_CIRCLE_ID + g_SelectedSymbol - 1;
+    elsif (playerNumber = 2) then
+        symbolId := STARTING_SQUARE_ID + g_SelectedSymbol - 1;
+    end if;
+
+    SetSymbolState(symbolId, DEFAULT_STATE);
+end;
+----------------------------------------------------------------------------

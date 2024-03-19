@@ -42,6 +42,10 @@ Sym21S1  : constant integer := 26;
 Sym22S1  : constant integer := 27;
 Sym23S1  : constant integer := 28;
 Sym24S1  : constant integer := 29;
+Lbl1S1   : constant integer := 30;
+Lbl2S1   : constant integer := 31;
+Lbl3S1   : constant integer := 32;
+Lbl4S1   : constant integer := 33;
 
 -- Serial Port Aliases
 Port1    : constant integer := 1;
@@ -101,42 +105,120 @@ Truck_Keyed       : constant integer := 7;
 
  
  --$END  c:\Users\User\Desktop\Triple-T\config.iri
-
+----------------------------------------------------------------------------
+--$START  c:\Users\User\Desktop\Triple-T\generals\constants.iri 
+ ----------------------------------------------------------------------------
 TRUE: constant integer := 1;
 FALSE: constant integer := 0;
-
-g_Player1Score: integer := 0;
-g_Player2Score: integer := 0;
-
-g_TopArrowPosition: integer := 0;
-g_LeftArrowPosition: integer := 0;
-
-g_SelectedSymbol: integer := 0;
-g_CurrentPlayer: integer := 1;
-
+----------------------------------------------------------------------------
 TOP_ARROW_INCREMENT: constant integer := 1;
 LEFT_ARROW_INCREMENT: constant integer := 3;
-
+----------------------------------------------------------------------------
 MAX_TOP_ARROW_POSITION: constant integer := 2;
 MAX_LEFT_ARROW_POSITION: constant integer := 6;
-
+----------------------------------------------------------------------------
 STARTING_CIRCLE_ID: constant integer := 6;
 STARTING_SQUARE_ID: constant integer := 15;
-
+----------------------------------------------------------------------------
 STARTING_TOP_ARRROW_ID: constant integer := 24;
 STARTING_LEFT_ARRROW_ID: constant integer := 27;
-
+----------------------------------------------------------------------------
 DEFAULT_STATE: constant integer := 1;
 FILL_STATE: constant integer := 2;
 EMPTY_STATE: constant integer := 3;
-
+---------------------------------------------------------------------------- 
+ --$END  c:\Users\User\Desktop\Triple-T\generals\constants.iri
+--$START  c:\Users\User\Desktop\Triple-T\generals\variables.iri 
+ ----------------------------------------------------------------------------
+g_Player1Score: integer := 0;
+g_Player2Score: integer := 0;
+----------------------------------------------------------------------------
+g_TopArrowPosition: integer := 0;
+g_LeftArrowPosition: integer := 0;
+----------------------------------------------------------------------------
+g_SelectedSymbol: integer := 0;
+g_CurrentPlayer: integer := 1;
+----------------------------------------------------------------------------
 type arrIntegers is array[9] of integer;
-
+----------------------------------------------------------------------------
 g_arrPlayer1Symbols: arrIntegers;
 g_arrPlayer2Symbols: arrIntegers;
+---------------------------------------------------------------------------- 
+ --$END  c:\Users\User\Desktop\Triple-T\generals\variables.iri
+----------------------------------------------------------------------------
+--$START  c:\Users\User\Desktop\Triple-T\util\symbol_manager.iri 
+ ----------------------------------------------------------------------------
+function GetSelectedSymbol: integer;
+begin
+    return g_TopArrowPosition + g_LeftArrowPosition + 1;
+end;
+----------------------------------------------------------------------------
+function IsSymbolPlayable(symbolId: integer): integer;
+    i: integer;
+begin
+    for i := 1 to 9
+    loop
+        if (g_arrPlayer1Symbols[i] = symbolId
+            or g_arrPlayer2Symbols[i] = symbolId) then
+            return FALSE;
+        end if;
+    end loop;
 
---$START  c:\Users\User\Desktop\Triple-T\util\arrow.iri 
- function SetArrowPosition(
+    return TRUE;
+end;
+----------------------------------------------------------------------------
+procedure StoreSelectedSymbol(playerNumber: integer);
+begin
+    if (playerNumber = 1) then
+        g_arrPlayer1Symbols[g_SelectedSymbol] := TRUE;
+    elsif (playerNumber = 2) then
+        g_arrPlayer2Symbols[g_SelectedSymbol] := TRUE;
+    end if;
+end;
+----------------------------------------------------------------------------
+procedure DrawSelectedSymbol(playerNumber: integer);
+    symbolId: integer;
+begin
+    if (playerNumber = 1) then
+        symbolId := STARTING_CIRCLE_ID + g_SelectedSymbol - 1;
+    elsif (playerNumber = 2) then
+        symbolId := STARTING_SQUARE_ID + g_SelectedSymbol - 1;
+    end if;
+
+    SetSymbolState(symbolId, DEFAULT_STATE);
+end;
+---------------------------------------------------------------------------- 
+ --$END  c:\Users\User\Desktop\Triple-T\util\symbol_manager.iri
+--$START  c:\Users\User\Desktop\Triple-T\util\array_manager.iri 
+ ----------------------------------------------------------------------------
+function ArrayMatch(arr1: arrIntegers; arr2: arrIntegers): integer;
+    i: integer;
+begin
+    for i := 1 to 9
+    loop
+        if (arr1[i] <> arr2[i]) then
+            return FALSE;
+        end if;
+    end loop;
+    return TRUE;
+end;
+----------------------------------------------------------------------------
+function NewArray: arrIntegers;
+    arr: arrIntegers;
+    i: integer;
+begin
+    for i := 1 to 9
+    loop
+        arr[i] := 0;
+    end loop;
+
+    return arr;
+end;
+---------------------------------------------------------------------------- 
+ --$END  c:\Users\User\Desktop\Triple-T\util\array_manager.iri
+--$START  c:\Users\User\Desktop\Triple-T\util\arrow_manager.iri 
+ ----------------------------------------------------------------------------
+function SetArrowPosition(
     arrowPosition: integer; 
     incrementValue: integer; 
     maxValue: integer): integer;
@@ -155,7 +237,7 @@ begin
 
     return newPosition;
 end;
-
+----------------------------------------------------------------------------
 procedure DrawArrow(arrrowPosition: integer; startingId: integer; incrementValue: integer);
     i: integer;
     arrowState: integer;
@@ -179,49 +261,8 @@ begin
 
         SetSymbolState(startingId + (i - 1), state);
     end loop;
-end; 
- --$END  c:\Users\User\Desktop\Triple-T\util\arrow.iri
---$START  c:\Users\User\Desktop\Triple-T\util\enter.iri 
- function GetSelectedSymbol: integer;
-begin
-    return g_TopArrowPosition + g_LeftArrowPosition + 1;
 end;
-
-function IsSymbolPlayable(symbolId: integer): integer;
-    i: integer;
-begin
-    for i := 1 to 9
-    loop
-        if (g_arrPlayer1Symbols[i] = symbolId
-            or g_arrPlayer2Symbols[i] = symbolId) then
-            return FALSE;
-        end if;
-    end loop;
-
-    return TRUE;
-end;
-
-procedure StoreSelectedSymbol(playerNumber: integer);
-begin
-    if (playerNumber = 1) then
-        g_arrPlayer1Symbols[g_SelectedSymbol] := TRUE;
-    elsif (playerNumber = 2) then
-        g_arrPlayer2Symbols[g_SelectedSymbol] := TRUE;
-    end if;
-end;
-
-procedure DrawSelectedSymbol(playerNumber: integer);
-    symbolId: integer;
-begin
-    if (playerNumber = 1) then
-        symbolId := STARTING_CIRCLE_ID + g_SelectedSymbol - 1;
-    elsif (playerNumber = 2) then
-        symbolId := STARTING_SQUARE_ID + g_SelectedSymbol - 1;
-    end if;
-
-    SetSymbolState(symbolId, DEFAULT_STATE);
-end;
-
+----------------------------------------------------------------------------
 procedure RestartArrowsPosition;
 begin
     g_TopArrowPosition := 0;
@@ -229,54 +270,59 @@ begin
     DrawArrow(g_TopArrowPosition, STARTING_TOP_ARRROW_ID, TOP_ARROW_INCREMENT);
     DrawArrow(g_LeftArrowPosition, STARTING_LEFT_ARRROW_ID, LEFT_ARROW_INCREMENT);
 end;
-
-
+---------------------------------------------------------------------------- 
+ --$END  c:\Users\User\Desktop\Triple-T\util\arrow_manager.iri
+--$START  c:\Users\User\Desktop\Triple-T\util\clear_screen.iri 
+ ----------------------------------------------------------------------------
+procedure DrawSymbols(startingId: integer; state: integer; totalWidgets: integer);
+    i: integer;
+    lastId: integer;
+begin
+    lastId := startingId + totalWidgets;
+    for i := startingId to lastId
+    loop
+        SetWidgetVisibility(i, Von);
+        SetSymbolState(i, state);
+    end loop;
+end;
+----------------------------------------------------------------------------
+procedure ClearScreen;
+begin
+    DrawSymbols(STARTING_CIRCLE_ID, EMPTY_STATE, 25);
+end;
+----------------------------------------------------------------------------
+procedure RestartGame;
+begin
+    SetLabelText(Lbl3S1, IntegerToString(g_Player1Score, 0));
+    SetLabelText(Lbl4S1, IntegerToString(g_Player2Score, 0));
+    g_arrPlayer1Symbols := NewArray;
+    g_arrPlayer2Symbols := NewArray;
+    RestartArrowsPosition;
+    ClearScreen;
+    g_CurrentPlayer := 1;
+    DisplayStatus("Player 1 Turn!");
+    SetSymbolState(STARTING_LEFT_ARRROW_ID, DEFAULT_STATE);
+    SetSymbolState(STARTING_TOP_ARRROW_ID, DEFAULT_STATE);
+end;
+---------------------------------------------------------------------------- 
+ --$END  c:\Users\User\Desktop\Triple-T\util\clear_screen.iri
+--$START  c:\Users\User\Desktop\Triple-T\util\go_next_turn.iri 
+ ----------------------------------------------------------------------------
 procedure GoToNextTurn;
 begin
     if (g_CurrentPlayer = 1) then
         g_CurrentPlayer := 2;
+        DisplayStatus("Player 2 Turn!");
     elsif (g_CurrentPlayer = 2) then
         g_CurrentPlayer := 1;
+        DisplayStatus("Player 1 Turn!");
     end if;
     RestartArrowsPosition;
-    -- PINTAR TURNO
 end;
-
-procedure SetRoundWinner(playerNumber: integer);
-begin
-    if (playerNumber = 1) then
-        g_Player1Score := g_Player1Score + 1;
-        -- label ganador
-    elsif (playerNumber = 2) then
-        g_Player2Score := g_Player2Score + 1;
-        -- label ganador
-    end if;
-end;
-
-function ArrayMatch(arr1: arrIntegers; arr2: arrIntegers): integer;
-    i: integer;
-begin
-    for i := 1 to 9
-    loop
-        if (arr1[i] <> arr2[i]) then
-            return FALSE;
-        end if;
-    end loop;
-    return TRUE;
-end;
-
-function NewArray: arrIntegers;
-    arr: arrIntegers;
-    i: integer;
-begin
-    for i := 1 to 9
-    loop
-        arr[i] := 0;
-    end loop;
-
-    return arr;
-end;
-
+---------------------------------------------------------------------------- 
+ --$END  c:\Users\User\Desktop\Triple-T\util\go_next_turn.iri
+--$START  c:\Users\User\Desktop\Triple-T\util\check_win.iri 
+ ----------------------------------------------------------------------------
 function IsWinnerPlayHelper(arrSymbols: arrIntegers; n1: integer; n2: integer; n3: integer): integer;
     winnerArray: arrIntegers;
     strippedArray: arrIntegers;
@@ -295,7 +341,7 @@ begin
 
     return ArrayMatch(strippedArray, winnerArray);
 end;
-
+----------------------------------------------------------------------------
 function IsWinnerPlay(arrSymbols: arrIntegers): integer;
 begin
     if (IsWinnerPlayHelper(arrSymbols, 1, 2, 3) = TRUE) then  
@@ -318,7 +364,10 @@ begin
 
     return FALSE;
 end;
-
+---------------------------------------------------------------------------- 
+ --$END  c:\Users\User\Desktop\Triple-T\util\check_win.iri
+--$START  c:\Users\User\Desktop\Triple-T\util\win_game.iri 
+ ----------------------------------------------------------------------------
 procedure DrawWinnerPlay(playerNumber: integer);
     i: integer;
     symbolId: integer;
@@ -339,7 +388,20 @@ begin
         end if;
     end loop;
 end;
-
+----------------------------------------------------------------------------
+procedure SetRoundWinner(playerNumber: integer);
+begin
+    if (playerNumber = 1) then
+        g_Player1Score := g_Player1Score + 1;
+        DisplayStatus("Player 1 Won!");
+    elsif (playerNumber = 2) then
+        g_Player2Score := g_Player2Score + 1;
+        DisplayStatus("Player 2 Won!");
+    end if;
+    SetLabelText(Lbl3S1, IntegerToString(g_Player1Score, 0));
+    SetLabelText(Lbl4S1, IntegerToString(g_Player2Score, 0));
+end;
+----------------------------------------------------------------------------
 procedure CheckForWin;
     winnerPlayer: integer;
 begin
@@ -356,11 +418,13 @@ begin
 
     DrawWinnerPlay(winnerPlayer);
     SetRoundWinner(winnerPlayer);
-    DisableHandler(EnterKeyPressed);
+    ProgramDelay(150);
+    RestartGame;
 end;
+----------------------------------------------------------------------------
  
- --$END  c:\Users\User\Desktop\Triple-T\util\enter.iri
-
+ --$END  c:\Users\User\Desktop\Triple-T\util\win_game.iri
+----------------------------------------------------------------------------
 --$START  c:\Users\User\Desktop\Triple-T\handlers\key_pressed\nav_down.iri 
  handler NavDownKeyPressed;
 begin
@@ -398,7 +462,8 @@ begin
 end; 
  --$END  c:\Users\User\Desktop\Triple-T\handlers\key_pressed\nav_right.iri
 --$START  c:\Users\User\Desktop\Triple-T\handlers\key_pressed\enter.iri 
- handler EnterKeyPressed;
+ ----------------------------------------------------------------------------
+handler EnterKeyPressed;
 begin
     g_SelectedSymbol := GetSelectedSymbol;
 
@@ -410,29 +475,10 @@ begin
 
     CheckForWin;
 end;
- 
+---------------------------------------------------------------------------- 
  --$END  c:\Users\User\Desktop\Triple-T\handlers\key_pressed\enter.iri
-
-procedure DrawSymbols(startingId: integer; state: integer; totalWidgets: integer);
-    i: integer;
-    lastId: integer;
+----------------------------------------------------------------------------
 begin
-    lastId := startingId + totalWidgets;
-    for i := startingId to lastId
-    loop
-        SetWidgetVisibility(i, Von);
-        SetSymbolState(i, state);
-    end loop;
-end;
-
-procedure ClearScreen;
-begin
-    DrawSymbols(STARTING_CIRCLE_ID, EMPTY_STATE, 25);
-end;
-
-begin
-    ClearScreen;
-    SetSymbolState(STARTING_LEFT_ARRROW_ID, DEFAULT_STATE);
-    SetSymbolState(STARTING_TOP_ARRROW_ID, DEFAULT_STATE);
+    RestartGame;
 end TicTacToe;
 --$END  c:\Users\User\Desktop\Triple-T\main.src

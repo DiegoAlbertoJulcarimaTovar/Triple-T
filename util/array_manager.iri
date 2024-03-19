@@ -1,0 +1,25 @@
+----------------------------------------------------------------------------
+function ArrayMatch(arr1: arrIntegers; arr2: arrIntegers): integer;
+    i: integer;
+begin
+    for i := 1 to 9
+    loop
+        if (arr1[i] <> arr2[i]) then
+            return FALSE;
+        end if;
+    end loop;
+    return TRUE;
+end;
+----------------------------------------------------------------------------
+function NewArray: arrIntegers;
+    arr: arrIntegers;
+    i: integer;
+begin
+    for i := 1 to 9
+    loop
+        arr[i] := 0;
+    end loop;
+
+    return arr;
+end;
+----------------------------------------------------------------------------

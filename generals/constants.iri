@@ -1,0 +1,20 @@
+----------------------------------------------------------------------------
+TRUE: constant integer := 1;
+FALSE: constant integer := 0;
+----------------------------------------------------------------------------
+TOP_ARROW_INCREMENT: constant integer := 1;
+LEFT_ARROW_INCREMENT: constant integer := 3;
+----------------------------------------------------------------------------
+MAX_TOP_ARROW_POSITION: constant integer := 2;
+MAX_LEFT_ARROW_POSITION: constant integer := 6;
+----------------------------------------------------------------------------
+STARTING_CIRCLE_ID: constant integer := 6;
+STARTING_SQUARE_ID: constant integer := 15;
+----------------------------------------------------------------------------
+STARTING_TOP_ARRROW_ID: constant integer := 24;
+STARTING_LEFT_ARRROW_ID: constant integer := 27;
+----------------------------------------------------------------------------
+DEFAULT_STATE: constant integer := 1;
+FILL_STATE: constant integer := 2;
+EMPTY_STATE: constant integer := 3;
+----------------------------------------------------------------------------

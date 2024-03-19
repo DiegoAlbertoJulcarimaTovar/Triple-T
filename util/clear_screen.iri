@@ -1,0 +1,32 @@
+----------------------------------------------------------------------------
+procedure DrawSymbols(startingId: integer; state: integer; totalWidgets: integer);
+    i: integer;
+    lastId: integer;
+begin
+    lastId := startingId + totalWidgets;
+    for i := startingId to lastId
+    loop
+        SetWidgetVisibility(i, Von);
+        SetSymbolState(i, state);
+    end loop;
+end;
+----------------------------------------------------------------------------
+procedure ClearScreen;
+begin
+    DrawSymbols(STARTING_CIRCLE_ID, EMPTY_STATE, 25);
+end;
+----------------------------------------------------------------------------
+procedure RestartGame;
+begin
+    SetLabelText(Lbl3S1, IntegerToString(g_Player1Score, 0));
+    SetLabelText(Lbl4S1, IntegerToString(g_Player2Score, 0));
+    g_arrPlayer1Symbols := NewArray;
+    g_arrPlayer2Symbols := NewArray;
+    RestartArrowsPosition;
+    ClearScreen;
+    g_CurrentPlayer := 1;
+    DisplayStatus("Player 1 Turn!");
+    SetSymbolState(STARTING_LEFT_ARRROW_ID, DEFAULT_STATE);
+    SetSymbolState(STARTING_TOP_ARRROW_ID, DEFAULT_STATE);
+end;
+----------------------------------------------------------------------------
