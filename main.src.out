@@ -1,0 +1,278 @@
+--$START  c:\Users\User\Desktop\Triple-T\main.src
+program TicTacToe;
+
+--$START  c:\Users\User\Desktop\Triple-T\config.iri 
+ -------------------------------------------------
+-- Used with iRev Configuration File
+-- C:\Users\User\Desktop\Triple-T\main.920
+-------------------------------------------------
+
+
+-- Scale Aliases
+
+-- Setpoint Aliases
+
+-- Widget Aliases
+Bar1S1   : constant integer := 1;
+Graph3   : constant integer := 2;
+Bar3S1   : constant integer := 3;
+Graph5   : constant integer := 4;
+Graph6   : constant integer := 5;
+Sym1S1   : constant integer := 6;
+Sym2S1   : constant integer := 7;
+Sym3S1   : constant integer := 8;
+Sym4S1   : constant integer := 9;
+Sym5S1   : constant integer := 10;
+Sym6S1   : constant integer := 11;
+Sym7S1   : constant integer := 12;
+Sym8S1   : constant integer := 13;
+Sym9S1   : constant integer := 14;
+Sym10S1  : constant integer := 15;
+Sym11S1  : constant integer := 16;
+Sym12S1  : constant integer := 17;
+Sym13S1  : constant integer := 18;
+Sym14S1  : constant integer := 19;
+Sym15S1  : constant integer := 20;
+Sym16S1  : constant integer := 21;
+Sym17S1  : constant integer := 22;
+Sym18S1  : constant integer := 23;
+Sym19S1  : constant integer := 24;
+Sym20S1  : constant integer := 25;
+Sym21S1  : constant integer := 26;
+Sym22S1  : constant integer := 27;
+Sym23S1  : constant integer := 28;
+Sym24S1  : constant integer := 29;
+
+-- Serial Port Aliases
+Port1    : constant integer := 1;
+Port2    : constant integer := 2;
+Port3    : constant integer := 3;
+Port4    : constant integer := 4;
+
+-- Analog Output Card Aliases
+
+-- Digital I/O Aliases
+DIOCRD0  : constant integer := 0;
+DIO0_1   : constant integer := 1;
+DIO0_2   : constant integer := 2;
+DIO0_3   : constant integer := 3;
+DIO0_4   : constant integer := 4;
+DIO0_5   : constant integer := 5;
+DIO0_6   : constant integer := 6;
+DIO0_7   : constant integer := 7;
+DIO0_8   : constant integer := 8;
+DIO0_9   : constant integer := 9;
+DIO0_10  : constant integer := 10;
+DIO0_11  : constant integer := 11;
+DIO0_12  : constant integer := 12;
+DIO0_13  : constant integer := 13;
+DIO0_14  : constant integer := 14;
+DIO0_15  : constant integer := 15;
+DIO0_16  : constant integer := 16;
+DIO0_17  : constant integer := 17;
+DIO0_18  : constant integer := 18;
+DIO0_19  : constant integer := 19;
+DIO0_20  : constant integer := 20;
+DIO0_21  : constant integer := 21;
+DIO0_22  : constant integer := 22;
+DIO0_23  : constant integer := 23;
+DIO0_24  : constant integer := 24;
+
+-- Database Type Definitions and Field Aliases
+type TruckDatabase is Database ("Truck")
+	ID       : string;
+	Pri_Wgt  : real;
+	Sec_Wgt  : real;
+	Ter_Wgt  : real;
+	TimeDate : datetime;
+	Scale    : integer;
+	Keyed    : integer;
+end database;
+
+Truck_ID          : constant integer := 1;
+Truck_Pri_Wgt     : constant integer := 2;
+Truck_Sec_Wgt     : constant integer := 3;
+Truck_Ter_Wgt     : constant integer := 4;
+Truck_TimeDate    : constant integer := 5;
+Truck_Scale       : constant integer := 6;
+Truck_Keyed       : constant integer := 7;
+
+
+
+ 
+ --$END  c:\Users\User\Desktop\Triple-T\config.iri
+
+TRUE: constant integer := 1;
+FALSE: constant integer := 0;
+
+g_TopArrowPosition: integer := 0;
+g_LeftArrowPosition: integer := 0;
+
+g_SelectedSymbol: integer := 0;
+g_CurrentPlayer: integer := 1;
+
+TOP_ARROW_INCREMENT: constant integer := 1;
+LEFT_ARROW_INCREMENT: constant integer := 3;
+
+MAX_TOP_ARROW_POSITION: constant integer := 2;
+MAX_LEFT_ARROW_POSITION: constant integer := 6;
+
+STARTING_CIRCLE_ID: constant integer := 6;
+STARTING_SQUARE_ID: constant integer := 15;
+
+STARTING_TOP_ARRROW_ID: constant integer := 24;
+STARTING_LEFT_ARRROW_ID: constant integer := 27;
+
+DEFAULT_STATE: constant integer := 1;
+FILL_STATE: constant integer := 2;
+EMPTY_STATE: constant integer := 3;
+
+type arrIntegers is array[9] of integer;
+
+g_arrPlayer1Symbols: arrIntegers;
+g_arrPlayer2Symbols: arrIntegers;
+
+--$START  c:\Users\User\Desktop\Triple-T\util\arrow.iri 
+ function SetArrowPosition(
+    arrowPosition: integer; 
+    incrementValue: integer; 
+    maxValue: integer): integer;
+begin
+    if (arrowPosition = maxValue) then
+        return 0;
+    end if;
+
+    return arrowPosition + incrementValue;
+end;
+
+procedure DrawArrow(arrrowPosition: integer; startingId: integer; incrementValue: integer);
+    i: integer;
+    arrowState: integer;
+    state: integer;
+begin
+    if (arrrowPosition = (incrementValue * 0)) then
+        arrowState := 1;
+    elsif (arrrowPosition = (incrementValue * 1)) then
+        arrowState := 2;
+    elsif (arrrowPosition = (incrementValue * 2)) then
+        arrowState := 3;
+    end if;
+
+    for i := 1 to 3
+    loop
+        if (i = arrowState) then
+            state := DEFAULT_STATE;
+        else
+            state := EMPTY_STATE;
+        end if;
+
+        SetSymbolState(startingId + (i - 1), state);
+    end loop;
+end; 
+ --$END  c:\Users\User\Desktop\Triple-T\util\arrow.iri
+--$START  c:\Users\User\Desktop\Triple-T\util\enter.iri 
+ function GetSelectedSymbol: integer;
+begin
+    return g_TopArrowPosition + g_LeftArrowPosition;
+end;
+
+function IsSymbolPlayable(symbolId: integer): integer;
+    i: integer;
+begin
+    for i := 1 to 9
+    loop
+        if (g_arrPlayer1Symbols[i] = symbolId) then
+            return FALSE;
+        end if;
+    end loop;
+
+    for i := 1 to 9
+    loop
+        if (g_arrPlayer2Symbols[i] = symbolId) then
+            return FALSE;
+        end if;
+    end loop;
+
+    return TRUE;
+end;
+
+procedure StoreSelectedSymbol(playerNumber: integer);
+begin
+    if (playerNumber = 1) then
+        g_arrPlayer1Symbols[g_SelectedSymbol + 1] := g_SelectedSymbol;
+    elsif (playerNumber = 2) then
+        g_arrPlayer2Symbols[g_SelectedSymbol + 1] := g_SelectedSymbol;
+    end if;
+end;
+
+procedure DrawSelectedSymbol(playerNumber: integer);
+    symbolId: integer;
+begin
+    if (playerNumber = 1) then
+        symbolId := STARTING_CIRCLE_ID + g_SelectedSymbol;
+    elsif (playerNumber = 2) then
+        symbolId := STARTING_SQUARE_ID + g_SelectedSymbol;
+    end if;
+
+    SetSymbolState(symbolId, DEFAULT_STATE);
+end; 
+ --$END  c:\Users\User\Desktop\Triple-T\util\enter.iri
+
+--$START  c:\Users\User\Desktop\Triple-T\handlers\key_pressed\nav_down.iri 
+ handler NavDownKeyPressed;
+begin
+    g_LeftArrowPosition := SetArrowPosition(g_LeftArrowPosition, LEFT_ARROW_INCREMENT, MAX_LEFT_ARROW_POSITION);
+    DrawArrow(g_LeftArrowPosition, STARTING_LEFT_ARRROW_ID, LEFT_ARROW_INCREMENT);
+end; 
+ --$END  c:\Users\User\Desktop\Triple-T\handlers\key_pressed\nav_down.iri
+--$START  c:\Users\User\Desktop\Triple-T\handlers\key_pressed\nav_right.iri 
+ handler NavRightKeyPressed;
+begin
+    g_TopArrowPosition := SetArrowPosition(g_TopArrowPosition, TOP_ARROW_INCREMENT, MAX_TOP_ARROW_POSITION);
+    DrawArrow(g_TopArrowPosition, STARTING_TOP_ARRROW_ID, TOP_ARROW_INCREMENT);
+end; 
+ --$END  c:\Users\User\Desktop\Triple-T\handlers\key_pressed\nav_right.iri
+--$START  c:\Users\User\Desktop\Triple-T\handlers\key_pressed\enter.iri 
+ handler EnterKeyPressed;
+begin
+    g_SelectedSymbol := 0;
+    g_SelectedSymbol := GetSelectedSymbol;
+
+    if (IsSymbolPlayable(g_SelectedSymbol) = TRUE) then
+        StoreSelectedSymbol(g_CurrentPlayer);
+        DrawSelectedSymbol(g_CurrentPlayer);
+    end if;
+
+    if (g_CurrentPlayer = 1) then
+        g_CurrentPlayer := 2;
+    else
+        g_CurrentPlayer := 1;
+    end if;
+    --CheckForWin;
+end;
+ 
+ --$END  c:\Users\User\Desktop\Triple-T\handlers\key_pressed\enter.iri
+
+procedure DrawSymbols(startingId: integer; state: integer; totalWidgets: integer);
+    i: integer;
+    lastId: integer;
+begin
+    lastId := startingId + totalWidgets;
+    for i := startingId to lastId
+    loop
+        SetWidgetVisibility(i, Von);
+        SetSymbolState(i, state);
+    end loop;
+end;
+
+procedure ClearScreen;
+begin
+    DrawSymbols(STARTING_CIRCLE_ID, EMPTY_STATE, 25);
+end;
+
+begin
+    ClearScreen;
+    SetSymbolState(STARTING_LEFT_ARRROW_ID, DEFAULT_STATE);
+    SetSymbolState(STARTING_TOP_ARRROW_ID, DEFAULT_STATE);
+end TicTacToe;
+--$END  c:\Users\User\Desktop\Triple-T\main.src

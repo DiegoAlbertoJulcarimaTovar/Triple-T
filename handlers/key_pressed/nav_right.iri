@@ -1,0 +1,5 @@
+handler NavRightKeyPressed;
+begin
+    g_TopArrowPosition := SetArrowPosition(g_TopArrowPosition, TOP_ARROW_INCREMENT, MAX_TOP_ARROW_POSITION);
+    DrawArrow(g_TopArrowPosition, STARTING_TOP_ARRROW_ID, TOP_ARROW_INCREMENT);
+end;

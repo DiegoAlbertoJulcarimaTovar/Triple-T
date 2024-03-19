@@ -1,0 +1,17 @@
+handler EnterKeyPressed;
+begin
+    g_SelectedSymbol := 0;
+    g_SelectedSymbol := GetSelectedSymbol;
+
+    if (IsSymbolPlayable(g_SelectedSymbol) = TRUE) then
+        StoreSelectedSymbol(g_CurrentPlayer);
+        DrawSelectedSymbol(g_CurrentPlayer);
+    end if;
+
+    if (g_CurrentPlayer = 1) then
+        g_CurrentPlayer := 2;
+    else
+        g_CurrentPlayer := 1;
+    end if;
+    --CheckForWin;
+end;

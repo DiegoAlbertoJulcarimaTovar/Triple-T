@@ -1,0 +1,36 @@
+function SetArrowPosition(
+    arrowPosition: integer; 
+    incrementValue: integer; 
+    maxValue: integer): integer;
+begin
+    if (arrowPosition = maxValue) then
+        return 0;
+    end if;
+
+    return arrowPosition + incrementValue;
+end;
+
+procedure DrawArrow(arrrowPosition: integer; startingId: integer; incrementValue: integer);
+    i: integer;
+    arrowState: integer;
+    state: integer;
+begin
+    if (arrrowPosition = (incrementValue * 0)) then
+        arrowState := 1;
+    elsif (arrrowPosition = (incrementValue * 1)) then
+        arrowState := 2;
+    elsif (arrrowPosition = (incrementValue * 2)) then
+        arrowState := 3;
+    end if;
+
+    for i := 1 to 3
+    loop
+        if (i = arrowState) then
+            state := DEFAULT_STATE;
+        else
+            state := EMPTY_STATE;
+        end if;
+
+        SetSymbolState(startingId + (i - 1), state);
+    end loop;
+end;

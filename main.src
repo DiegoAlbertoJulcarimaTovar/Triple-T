@@ -1,0 +1,63 @@
+program TicTacToe;
+
+#include config.iri
+
+TRUE: constant integer := 1;
+FALSE: constant integer := 0;
+
+g_TopArrowPosition: integer := 0;
+g_LeftArrowPosition: integer := 0;
+
+g_SelectedSymbol: integer := 0;
+g_CurrentPlayer: integer := 1;
+
+TOP_ARROW_INCREMENT: constant integer := 1;
+LEFT_ARROW_INCREMENT: constant integer := 3;
+
+MAX_TOP_ARROW_POSITION: constant integer := 2;
+MAX_LEFT_ARROW_POSITION: constant integer := 6;
+
+STARTING_CIRCLE_ID: constant integer := 6;
+STARTING_SQUARE_ID: constant integer := 15;
+
+STARTING_TOP_ARRROW_ID: constant integer := 24;
+STARTING_LEFT_ARRROW_ID: constant integer := 27;
+
+DEFAULT_STATE: constant integer := 1;
+FILL_STATE: constant integer := 2;
+EMPTY_STATE: constant integer := 3;
+
+type arrIntegers is array[9] of integer;
+
+g_arrPlayer1Symbols: arrIntegers;
+g_arrPlayer2Symbols: arrIntegers;
+
+#include util\arrow.iri
+#include util\enter.iri
+
+#include handlers\key_pressed\nav_down.iri
+#include handlers\key_pressed\nav_right.iri
+#include handlers\key_pressed\enter.iri
+
+procedure DrawSymbols(startingId: integer; state: integer; totalWidgets: integer);
+    i: integer;
+    lastId: integer;
+begin
+    lastId := startingId + totalWidgets;
+    for i := startingId to lastId
+    loop
+        SetWidgetVisibility(i, Von);
+        SetSymbolState(i, state);
+    end loop;
+end;
+
+procedure ClearScreen;
+begin
+    DrawSymbols(STARTING_CIRCLE_ID, EMPTY_STATE, 25);
+end;
+
+begin
+    ClearScreen;
+    SetSymbolState(STARTING_LEFT_ARRROW_ID, DEFAULT_STATE);
+    SetSymbolState(STARTING_TOP_ARRROW_ID, DEFAULT_STATE);
+end TicTacToe;

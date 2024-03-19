@@ -1,0 +1,5 @@
+handler NavDownKeyPressed;
+begin
+    g_LeftArrowPosition := SetArrowPosition(g_LeftArrowPosition, LEFT_ARROW_INCREMENT, MAX_LEFT_ARROW_POSITION);
+    DrawArrow(g_LeftArrowPosition, STARTING_LEFT_ARRROW_ID, LEFT_ARROW_INCREMENT);
+end;
