@@ -1,20 +1,21 @@
 ----------------------------------------------------------------------------
 function GetSelectedSymbol: integer;
 begin
+    -- DisplayStatus("Pos: " + IntegerToString(g_TopArrowPosition + g_LeftArrowPosition + 1, 0));
+    -- ProgramDelay(150);
     return g_TopArrowPosition + g_LeftArrowPosition + 1;
 end;
 ----------------------------------------------------------------------------
 function IsSymbolPlayable(symbolId: integer): integer;
-    i: integer;
 begin
-    for i := 1 to 9
-    loop
-        if (g_arrPlayer1Symbols[i] = symbolId
-            or g_arrPlayer2Symbols[i] = symbolId) then
-            return FALSE;
-        end if;
-    end loop;
-
+    if (g_arrPlayer1Symbols[symbolId] = TRUE
+        or g_arrPlayer2Symbols[symbolId] = TRUE) then
+        -- DisplayStatus("Sym " + IntegerToString(symbolId, 0) + " is not playable");
+        -- ProgramDelay(150);
+        return FALSE;
+    end if;
+    -- DisplayStatus("Sym " + IntegerToString(symbolId, 0) + " is playable");
+    -- ProgramDelay(150);
     return TRUE;
 end;
 ----------------------------------------------------------------------------
@@ -22,8 +23,12 @@ procedure StoreSelectedSymbol(playerNumber: integer);
 begin
     if (playerNumber = 1) then
         g_arrPlayer1Symbols[g_SelectedSymbol] := TRUE;
+        -- DisplayStatus("Sym " + IntegerToString(g_SelectedSymbol, 0) + " played by player 1");
+        -- ProgramDelay(150);
     elsif (playerNumber = 2) then
         g_arrPlayer2Symbols[g_SelectedSymbol] := TRUE;
+        -- DisplayStatus("Sym " + IntegerToString(g_SelectedSymbol, 0) + " played by player 2");
+        -- ProgramDelay(150);
     end if;
 end;
 ----------------------------------------------------------------------------
