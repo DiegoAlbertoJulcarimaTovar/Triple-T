@@ -25,6 +25,7 @@ begin
     RestartArrowsPosition;
     ClearScreen;
     g_CurrentPlayer := 1;
+    g_PlayedTurns := 0;
     DisplayStatus("Player 1 Turn!");
     SetSymbolState(STARTING_LEFT_ARRROW_ID, DEFAULT_STATE);
     SetSymbolState(STARTING_TOP_ARRROW_ID, DEFAULT_STATE);

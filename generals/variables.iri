@@ -13,3 +13,7 @@ type arrIntegers is array[9] of integer;
 g_arrPlayer1Symbols: arrIntegers;
 g_arrPlayer2Symbols: arrIntegers;
 ----------------------------------------------------------------------------
+g_PlayedTurns: integer := 0;
+----------------------------------------------------------------------------
+g_RoundWinner: integer := 0;
+----------------------------------------------------------------------------

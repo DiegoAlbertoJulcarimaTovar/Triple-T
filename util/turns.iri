@@ -1,0 +1,31 @@
+----------------------------------------------------------------------------
+procedure GoToNextTurn;
+begin
+    if (g_CurrentPlayer = 1) then
+        g_CurrentPlayer := 2;
+        DisplayStatus("Player 2 Turn!");
+    elsif (g_CurrentPlayer = 2) then
+        g_CurrentPlayer := 1;
+        DisplayStatus("Player 1 Turn!");
+    end if;
+    g_PlayedTurns := g_PlayedTurns + 1;
+    RestartArrowsPosition;
+end;
+----------------------------------------------------------------------------
+procedure HandleTie;
+begin
+    ProgramDelay(150);
+    DisplayStatus("It's a Tie!");
+    ProgramDelay(150);
+    RestartGame;
+end;
+----------------------------------------------------------------------------
+procedure CheckForTie;
+begin
+    if (g_PlayedTurns <> MAX_TURNS) then
+        return;
+    end if;
+
+    HandleTie;
+end;
+----------------------------------------------------------------------------

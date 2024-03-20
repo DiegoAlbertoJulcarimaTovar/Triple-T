@@ -18,3 +18,5 @@ DEFAULT_STATE: constant integer := 1;
 FILL_STATE: constant integer := 2;
 EMPTY_STATE: constant integer := 3;
 ----------------------------------------------------------------------------
+MAX_TURNS: constant integer := 8;
+----------------------------------------------------------------------------

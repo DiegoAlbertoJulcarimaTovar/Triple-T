@@ -9,7 +9,7 @@ program TicTacToe;
 #include util\array_manager.iri
 #include util\arrow_manager.iri
 #include util\clear_screen.iri
-#include util\go_next_turn.iri
+#include util\turns.iri
 #include util\check_win.iri
 #include util\win_game.iri
 ----------------------------------------------------------------------------
