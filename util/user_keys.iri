@@ -4,7 +4,7 @@ begin
     CurrentKey1Context := Key1Context;
     CurrentKey2Context := Key2Context;
     CurrentKey3Context := Key3Context;
-    CurrentKey3Context := Key4Context;
+    CurrentKey4Context := Key4Context;
     CurrentKey5Context := Key5Context;
 end;
 ----------------------------------------------------------------------------

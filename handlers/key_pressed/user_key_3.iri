@@ -2,8 +2,8 @@
 handler User3KeyPressed;
 begin
     ----------------------------------------------------------------------------
-    if (CurrentKey3Context = Screen1StartGame
-        or CurrentKey3Context = Screen2RestartGame) then
+    if (CurrentKey3Context = Screen2StartGame
+        or CurrentKey3Context = Screen1RestartGame) then
         GoToScreen1;
         g_Player1Score := 0;
         g_Player2Score := 0;

@@ -4,16 +4,16 @@ begin
     SetUserKeysDescription(
         "",
         "",
-        "Restart",
+        "New Game",
         "",
-        "Exit"
+        ""
     );
     SetUserKeysContext(
         EmptyKeyContext,
         EmptyKeyContext,
-        Screen2RestartGame,
+        Screen2StartGame,
         EmptyKeyContext,
-        Screen2Exit
+        EmptyKeyContext
     );
 end;
 ----------------------------------------------------------------------------

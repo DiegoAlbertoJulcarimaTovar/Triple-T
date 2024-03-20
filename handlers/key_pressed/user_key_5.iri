@@ -2,7 +2,7 @@
 handler User5KeyPressed;
 begin
     ----------------------------------------------------------------------------
-    if (CurrentKey5Context = Screen2Exit) then
+    if (CurrentKey5Context = Screen1Exit) then
         GoToScreen2;
         return;
     end if;
