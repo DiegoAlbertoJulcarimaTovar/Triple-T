@@ -1,0 +1,33 @@
+----------------------------------------------------------------------------
+procedure SetScreen2KeyContext;
+begin
+    SetUserKeysDescription(
+        "",
+        "",
+        "Restart",
+        "",
+        "Exit"
+    );
+    SetUserKeysContext(
+        EmptyKeyContext,
+        EmptyKeyContext,
+        Screen2RestartGame,
+        EmptyKeyContext,
+        Screen2Exit
+    );
+end;
+----------------------------------------------------------------------------
+procedure GoToScreen2;
+begin
+    DisableHandler(EnterKeyPressed);
+    DisableHandler(NavDownKeyPressed);
+    DisableHandler(NavUpKeyPressed);
+    DisableHandler(NavLeftKeyPressed);
+    DisableHandler(NavRightKeyPressed);
+
+    SetScreen2KeyContext;
+
+    g_CurrentScreen := SCREEN_2;
+    SelectScreen(g_CurrentScreen);
+end;
+----------------------------------------------------------------------------

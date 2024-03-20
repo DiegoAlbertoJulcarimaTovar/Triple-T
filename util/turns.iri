@@ -16,7 +16,6 @@ procedure HandleTie;
 begin
     ProgramDelay(150);
     DisplayStatus("It's a Tie!");
-    ProgramDelay(150);
     RestartGame;
 end;
 ----------------------------------------------------------------------------

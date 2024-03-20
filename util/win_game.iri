@@ -50,7 +50,6 @@ begin
 
     DrawWinnerPlay(winnerPlayer);
     SetRoundWinner(winnerPlayer);
-    ProgramDelay(150);
     RestartGame;
 end;
 ----------------------------------------------------------------------------

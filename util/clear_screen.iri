@@ -18,6 +18,7 @@ end;
 ----------------------------------------------------------------------------
 procedure RestartGame;
 begin
+    ProgramDelay(150);
     SetLabelText(Lbl3S1, IntegerToString(g_Player1Score, 0));
     SetLabelText(Lbl4S1, IntegerToString(g_Player2Score, 0));
     g_arrPlayer1Symbols := NewArray;

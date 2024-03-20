@@ -42,6 +42,7 @@ Lbl1S1   : constant integer := 30;
 Lbl2S1   : constant integer := 31;
 Lbl3S1   : constant integer := 32;
 Lbl4S1   : constant integer := 33;
+Lbl1S2   : constant integer := 34;
 
 -- Serial Port Aliases
 Port1    : constant integer := 1;

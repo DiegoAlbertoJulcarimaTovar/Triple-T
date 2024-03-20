@@ -1,0 +1,33 @@
+----------------------------------------------------------------------------
+procedure SetScreen1KeyContext;
+begin
+    SetUserKeysDescription(
+        "",
+        "",
+        "New Game",
+        "",
+        ""
+    );
+    SetUserKeysContext(
+        EmptyKeyContext,
+        EmptyKeyContext,
+        Screen1StartGame,
+        EmptyKeyContext,
+        EmptyKeyContext
+    );
+end;
+----------------------------------------------------------------------------
+procedure GoToScreen1;
+begin
+    EnableHandler(EnterKeyPressed);
+    EnableHandler(NavDownKeyPressed);
+    EnableHandler(NavUpKeyPressed);
+    EnableHandler(NavLeftKeyPressed);
+    EnableHandler(NavRightKeyPressed);
+
+    SetScreen1KeyContext;
+    
+    g_CurrentScreen := SCREEN_1;
+    SelectScreen(g_CurrentScreen);
+end;
+----------------------------------------------------------------------------

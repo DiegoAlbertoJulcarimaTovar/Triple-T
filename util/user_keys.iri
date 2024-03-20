@@ -1,0 +1,19 @@
+----------------------------------------------------------------------------
+procedure SetUserKeysContext(Key1Context : EnumKeyContext; Key2Context : EnumKeyContext; Key3Context : EnumKeyContext; Key4Context : EnumKeyContext; Key5Context : EnumKeyContext);
+begin
+    CurrentKey1Context := Key1Context;
+    CurrentKey2Context := Key2Context;
+    CurrentKey3Context := Key3Context;
+    CurrentKey3Context := Key4Context;
+    CurrentKey5Context := Key5Context;
+end;
+----------------------------------------------------------------------------
+procedure SetUserKeysDescription(Key1 : string; Key2 : string; Key3 : string; Key4 : string; Key5 : string);
+begin
+    SetSoftkeyText(1, Key1);
+    SetSoftkeyText(2, Key2);
+    SetSoftkeyText(3, Key3);
+    SetSoftkeyText(4, Key4);  
+    SetSoftkeyText(5, Key5);
+end;
+----------------------------------------------------------------------------

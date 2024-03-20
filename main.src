@@ -2,9 +2,11 @@ program TicTacToe;
 
 #include config.iri
 ----------------------------------------------------------------------------
+#include generals\enums.iri
 #include generals\constants.iri
 #include generals\variables.iri
 ----------------------------------------------------------------------------
+#include util\user_keys.iri
 #include util\symbol_manager.iri
 #include util\array_manager.iri
 #include util\arrow_manager.iri
@@ -13,6 +15,11 @@ program TicTacToe;
 #include util\check_win.iri
 #include util\win_game.iri
 ----------------------------------------------------------------------------
+#include screens\screen_1.iri
+#include screens\screen_2.iri
+----------------------------------------------------------------------------
+#include handlers\key_pressed\user_key_3.iri
+#include handlers\key_pressed\user_key_5.iri
 #include handlers\key_pressed\nav_down.iri
 #include handlers\key_pressed\nav_up.iri
 #include handlers\key_pressed\nav_left.iri
@@ -20,5 +27,5 @@ program TicTacToe;
 #include handlers\key_pressed\enter.iri
 ----------------------------------------------------------------------------
 begin
-    RestartGame;
+    GoToScreen2;
 end TicTacToe;

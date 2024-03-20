@@ -1,4 +1,12 @@
 ----------------------------------------------------------------------------
+CurrentKey1Context: EnumKeyContext;
+CurrentKey2Context: EnumKeyContext;
+CurrentKey3Context: EnumKeyContext;
+CurrentKey4Context: EnumKeyContext;
+CurrentKey5Context: EnumKeyContext;  
+----------------------------------------------------------------------------
+CurrentKeyContext: EnumKeyContext;  
+----------------------------------------------------------------------------
 g_Player1Score: integer := 0;
 g_Player2Score: integer := 0;
 ----------------------------------------------------------------------------
@@ -16,4 +24,6 @@ g_arrPlayer2Symbols: arrIntegers;
 g_PlayedTurns: integer := 0;
 ----------------------------------------------------------------------------
 g_RoundWinner: integer := 0;
+----------------------------------------------------------------------------
+g_CurrentScreen: integer := SCREEN_1;
 ----------------------------------------------------------------------------
