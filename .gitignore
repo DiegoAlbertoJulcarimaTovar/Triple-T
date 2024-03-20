@@ -1,0 +1,13 @@
+# compiled code
+*.cod
+*.bak
+
+# intermediate files
+*.src.out
+*.iri.out
+
+# 1280 network config files
+iRite.settings.json
+
+# code logs
+ERRORS.TXT
